@@ -46,4 +46,6 @@ public class Company {
     @NotBlank
     String description;
 
+
+
 }

@@ -4,14 +4,16 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-import lombok.AccessLevel;
-import lombok.Data;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 @Data
 @Entity
 @Table(name = "customers")
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Customer {
 
     @Id
@@ -45,7 +47,4 @@ public class Customer {
     @JoinColumn(name = "image_id", referencedColumnName = "id")
     Image image;
 
-//    @OneToOne(cascade = CascadeType.ALL)
-//            @JoinColumn(name = "lawyer_id",referencedColumnName = "id")
-//    Lawyer assignedTo;
 }

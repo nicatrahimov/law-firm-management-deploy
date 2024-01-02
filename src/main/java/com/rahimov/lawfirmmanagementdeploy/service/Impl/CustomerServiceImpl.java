@@ -6,7 +6,6 @@ import com.rahimov.lawfirmmanagementdeploy.exception.CustomerNotFoundException;
 import com.rahimov.lawfirmmanagementdeploy.model.Customer;
 import com.rahimov.lawfirmmanagementdeploy.repository.CustomerRepository;
 import com.rahimov.lawfirmmanagementdeploy.service.CustomerService;
-import com.rahimov.lawfirmmanagementdeploy.util.NullChecker;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -60,23 +59,44 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public String deleteById(Long id) {
-        Customer customer = customerRepository.findById(id).orElseThrow(CustomerNotFoundException::new);
-        if (NullChecker.isNull(customer)){
-            return "No customer with id: "+id;
-        }else {
+       customerRepository.findById(id).orElseThrow(CustomerNotFoundException::new);
             customerRepository.deleteById(id);
             return "Successfull";
-        }
-
     }
 
     @Override
     public String addCustomer(CustomerDto customerDto) {
-        return "ahsdbasnd";
+       Customer customer = Customer.builder()
+               .email(customerDto.getEmail())
+               .firstName(customerDto.getFirstName())
+               .lastName(customerDto.getLastName())
+               .phoneNumber(customerDto.getPhoneNumber())
+               .email(customerDto.getEmail())
+               .city(customerDto.getCity())
+               .country(customerDto.getCountry())
+               .build();
+
+       customerRepository.save(customer);
+
+       return "Successfully";
+
     }
 
     @Override
     public String editCustomer(CustomerDto customerDto) {
-        return "ahsbda";
+        try{
+            Customer customer1 = customerRepository.findById(customerDto.getId()).orElseThrow(CustomerNotFoundException::new);
+           customer1.setAddress(customerDto.getAddress());
+           customer1.setCity(customerDto.getCity());
+           customer1.setCountry(customerDto.getCountry());
+           customer1.setFirstName(customerDto.getFirstName());
+           customer1.setLastName(customerDto.getLastName());
+           customer1.setPhoneNumber(customerDto.getPhoneNumber());
+           customer1.setEmail(customerDto.getEmail());
+           customerRepository.save(customer1);
+           return "Successfully";
+        }catch (CustomerNotFoundException e){
+            return e.getMessage();
+        }
     }
 }

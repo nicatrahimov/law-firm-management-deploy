@@ -7,7 +7,6 @@ public class DateConverter {
 
     public static LocalDate toLocalDate(String dateString) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate localDate = LocalDate.parse(dateString, formatter);
         return LocalDate.parse(dateString,formatter);
     }
 
