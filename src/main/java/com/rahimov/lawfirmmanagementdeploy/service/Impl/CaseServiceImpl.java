@@ -76,6 +76,7 @@ public class CaseServiceImpl implements CaseService {
         if (NullChecker.isNotNull(aCase)){
             caseRepository.save(aCase);
         }
+        caseRepository.save(aCase);
         return "added successfully";
 
     }

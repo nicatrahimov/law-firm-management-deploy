@@ -7,9 +7,13 @@ import com.rahimov.lawfirmmanagementdeploy.enums.Office;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 
 
 import java.time.LocalDate;
+
+import static com.rahimov.lawfirmmanagementdeploy.enums.Office.HEAD_OFFICE;
 
 @Data
 @Entity
