@@ -32,11 +32,9 @@ public class Case {
     @Column(name = "case_number")
     String caseNumber;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "dd-MM-yyyy")
     @Column(name = "opened_date")
     LocalDate openedDate;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "dd-MM-yyyy")
     @Column(name = "limit_date")
     LocalDate limitDate;
 
@@ -47,4 +45,8 @@ public class Case {
 
     @Enumerated(EnumType.STRING)
     CaseStage caseStage;
+
+    @ManyToOne
+            @JoinColumn(name = "company_id")
+    Company company;
 }

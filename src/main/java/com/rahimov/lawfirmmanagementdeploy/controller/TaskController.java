@@ -18,13 +18,13 @@ public class TaskController {
 
     private final TaskService taskService;
     @GetMapping()
-    public ResponseEntity<List<Task>> getAllTasks(){
+    public ResponseEntity<List<TaskDto>> getAllTasks(){
 return new
         ResponseEntity<>(taskService.getAllTasks(),
         HttpStatusCode.valueOf(200));
     }
 @GetMapping("/{id}")
-public ResponseEntity<Task>getTaskById(@PathVariable Long id){
+public ResponseEntity<TaskDto>getTaskById(@PathVariable Long id){
     return new
             ResponseEntity<>(taskService.getTaskById(id),HttpStatusCode.valueOf(200));
 }
@@ -48,6 +48,5 @@ public ResponseEntity<Task>getTaskById(@PathVariable Long id){
 
     return new
             ResponseEntity<>(taskService.editTask(taskDto),HttpStatus.OK);
-
 }
 }

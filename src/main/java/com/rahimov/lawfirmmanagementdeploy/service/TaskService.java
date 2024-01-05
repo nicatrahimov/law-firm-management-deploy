@@ -11,8 +11,8 @@ import java.util.List;
 
 public interface TaskService {
 
-    List<Task>getAllTasks();
-    Task getTaskById(Long id);
+    List<TaskDto>getAllTasks();
+    TaskDto getTaskById(Long id);
 
     String saveTask(TaskDto taskDto);
 

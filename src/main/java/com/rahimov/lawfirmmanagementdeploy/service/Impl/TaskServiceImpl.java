@@ -13,6 +13,7 @@ import com.rahimov.lawfirmmanagementdeploy.service.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -23,13 +24,37 @@ public class TaskServiceImpl implements TaskService {
     private final CaseRepository caseRepository;
 
     @Override
-    public List<Task> getAllTasks() {
-        return taskRepository.findAll();
+    public List<TaskDto> getAllTasks() {
+        List<Task> tasks = taskRepository.findAll();
+        List<TaskDto>taskDtos = new ArrayList<>();
+        for(Task t : tasks){
+            TaskDto dto = TaskDto.builder()
+                    .id(t.getId())
+                    .caseId(t.getACase().getId())
+                    .remindDate(t.getRemindDate())
+                    .priority(t.getPriority())
+                    .name(t.getName())
+                    .description(t.getDescription())
+                    .build();
+
+            taskDtos.add(dto);
+        }
+
+return taskDtos;
     }
 
     @Override
-    public Task getTaskById(Long id) {
-        return taskRepository.findById(id).orElseThrow(() -> new TaskNotFound("Task not found"));
+    public TaskDto getTaskById(Long id) {
+        Task t = taskRepository.findById(id).orElseThrow(()->new TaskNotFound("not found id with: "+id));
+
+        return TaskDto.builder()
+                .id(t.getId())
+                .caseId(t.getACase().getId())
+                .remindDate(t.getRemindDate())
+                .priority(t.getPriority())
+                .name(t.getName())
+                .description(t.getDescription())
+                .build();
     }
 
     @Override
@@ -57,7 +82,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public String editTask(TaskDto task) {
         Task task1 = taskRepository.findById(task.getId()).orElseThrow(() -> new TaskNotFound("Task not found"));
-Case aCase = caseRepository.findById(task.getCaseId()).orElseThrow(CaseNotFoundException::new);
+Case aCase = caseRepository.findById(task1.getACase().getId()).orElseThrow(CaseNotFoundException::new);
 
         if (task.getName() != null) {
             task1.setName(task.getName());

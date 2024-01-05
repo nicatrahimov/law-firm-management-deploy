@@ -1,9 +1,12 @@
 package com.rahimov.lawfirmmanagementdeploy.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+
+import java.util.List;
 
 
 @Data
@@ -46,6 +49,7 @@ public class Company {
     @NotBlank
     String description;
 
-
-
+    @OneToMany
+    @JsonIgnore
+    List<Case> cases;
 }
